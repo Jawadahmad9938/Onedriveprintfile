@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OneDrive File Viewer</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
+        }
+        iframe {
+            width: 100%;
+            height: 500px;
+            border: 1px solid #ccc;
+            margin-top: 20px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            margin-top: 20px;
+            cursor: pointer;
+        }
+        input[type="text"] {
+            padding: 10px;
+            width: 50%;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>View and Print OneDrive File</h1>
+
+    <form method="POST">
+        <label for="fileUrl">Enter OneDrive Embed Link:</label><br>
+        <input type="text" id="fileUrl" name="fileUrl" placeholder="Enter OneDrive Embed URL" required>
+        <button type="submit">Load File</button>
+    </form>
+
+    <% if (fileUrl) { %>
+        <h2>File Preview:</h2>
+        <iframe id="fileIframe" src="<%= fileUrl %>" frameborder="0" scrolling="no"></iframe>
+        <button id="printButton">Print File</button>
+    <% } %>
+
+    <script>
+        document.getElementById('printButton')?.addEventListener('click', () => {
+            const iframe = document.getElementById('fileIframe');
+            if (iframe && iframe.contentWindow) {
+                iframe.contentWindow.focus();
+                iframe.contentWindow.print();
+            } else {
+                alert('Unable to print the content.');
+            }
+        });
+    </script>
+</body>
+</html>
